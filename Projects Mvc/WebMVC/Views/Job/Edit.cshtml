@@ -1,0 +1,53 @@
+﻿@using Core.Entities
+@model Application.Models.Jobs.JobEditViewModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Редактировать</h1>
+
+<h4>Задача</h4>
+<hr/>
+<div class="row">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"/>
+        <div class="form-group">
+            <input type="hidden" asp-for="Id"/>
+        </div>
+        <div class="form-group">
+            <label asp-for="JobName" class="control-label">Название</label>
+            <input asp-for="JobName" class="form-control"/>
+            <span asp-validation-for="JobName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Author" class="control-label">Автор</label>
+            @Html.DropDownListFor(x => x.SelectAuthorId, new SelectList(Model.AvailableWorkers, "Id", "FullName", Model.SelectAuthorId))
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Performer" class="control-label">Исполнитель</label>
+            @Html.DropDownListFor(x => x.SelectPerformerId, new SelectList(Model.AvailableWorkers, "Id", "FullName", Model.SelectPerformerId))
+        </div>
+        <div class="form-group">
+            <label asp-for="Status" class="control-label">Статус</label>
+            @Html.DropDownListFor(x => x.Status, @Html.GetEnumSelectList(typeof(JobStatus)))
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="control-label">Описание</label>
+            <input asp-for="Description" class="form-control"/>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Priority" class="control-label">Приоритет</label>
+            <input asp-for="Priority" min="0" class="form-control"/>
+            <span asp-validation-for="Priority" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn-sm btn-primary"/>
+        </div>
+    </form>
+</div>
+<div>
+    <a class="btn-sm btn-primary" asp-controller="Job" asp-action="View" asp-route-id="@Model.Id">Вернуться</a>
+</div>

@@ -1,0 +1,98 @@
+﻿@model IEnumerable<Application.Models.Projects.ProjectViewModel>
+@{
+    ViewData["Title"] = "Проекты";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Проекты</h1>
+<div class="form-reset">
+    <input type="submit" value="Сброс" formmethod="get"/>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+
+        <th >
+            <a asp-action="Create">Добавить</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-typeSorting="@ViewData["NameSort"]">Название проекта</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-typeSorting="@ViewData["CustomerSort"]">Компания заказчик</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-typeSorting="@ViewData["ExecutorSort"]">Компания Исполнитель</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-typeSorting="@ViewData["ManagerSort"]">Руководитель</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-typeSorting="@ViewData["WorkersSort"]">Работников</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-typeSorting="@ViewData["JobsSort"]">Задач</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-typeSorting="@ViewData["DateStartSort"]">Дата начала</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-typeSorting="@ViewData["DateEndSort"]">Дата окончания</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-typeSorting="@ViewData["PrioritySort"]">Приоритет</a>
+        </th>
+
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td >
+                <a class="btn-sm btn-primary" asp-controller="Project" asp-action="View" asp-route-id="@item.Id">Посмотреть</a>
+            </td>
+            <td > @Html.DisplayFor(modelItem => item.ProjectName)</td>
+            <td >@Html.DisplayFor(modelItem => item.CompanyCustomer)</td>
+            <td >@Html.DisplayFor(modelItem => item.CompanyExecutor)</td>
+            <td >
+                @if (item.Manager != null)
+                {
+                    @Html.ActionLink($"{item.Manager.FirstName} {item.Manager.LastName}", "View", "Worker", new { id = item.Manager.Id })
+                }
+                else
+                {
+                    @Html.DisplayName("---")
+                }
+            </td>
+            <td>
+                @if (item?.Workers.Count > 0)
+                {
+                    @Html.Raw(item.Workers.Count.ToString())
+                }
+                else
+                {
+                    @Html.DisplayName("0")
+                }
+            </td>
+            <td>
+                @if (item.Jobs.Count > 0)
+                {
+                    @Html.Raw(item.Workers.Count.ToString())
+                }
+                else
+                {
+                    @Html.DisplayName("0")
+                }
+            </td>
+            <td>@Html.Raw(item.StartTime.ToShortDateString())</td>
+            <td>@Html.Raw(item.EndTime.ToShortDateString())</td>
+            <td>@Html.DisplayFor(modelItem => item.Priority)</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<div>
+    <a class="btn-sm btn-primary" asp-controller="Home" asp-action="Index">Вернуться</a>
+</div>
