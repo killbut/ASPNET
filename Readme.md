@@ -1,8 +1,13 @@
-- .Net 7.0
-- ASP.NET CORE MVC 7
-- EntityFramework Core 7
+Технологии:
+- .NET 7.0
+- ASP.NET Core MVC
+- EntityFramework Core
 - AutoMapper
 - SqlServer
+
+Сущности:
+- Проект:
+-- Название проекта
 
 Реализовать программу для занесения данных о проектах в базу данных и дальнейшей работы
 с этими данными.
